@@ -3,10 +3,11 @@ import matplotlib.pyplot as plt
 import scipy.io.wavfile
 import scipy.signal
 from scipy import signal
+import numpy as np
 
-from IPython.display import Audio
+np.set_printoptions(threshold='nan')
 
-filename = '2-p.wav'
+filename = 'audio2-samplecut.wav'
 
 fs, wave = scipy.io.wavfile.read(filename)
 #Note that this particular file has a single channel. Most audio files will have two (stereo) channels.
@@ -18,8 +19,16 @@ print ('Audio length:', wave.size/fs, 'seconds')
 print ('Lowest amplitude:', wave.min())
 print ('Highest amplitude:',wave.max())
 
+
 print(wave)
 
+spectrum = np.fft.fft(wave,None)
+# print(spectrum.size)
+
+
+ceps = np.fft.ifft(np.log(np.abs(spectrum))).real
+
+print(ceps)
 
 
 
